@@ -18,7 +18,6 @@ class Product < Udacidata
   end
 
   private
-
     # Reads the last line of the data file, and gets the id if one exists
     # If it exists, increment and use this value
     # Otherwise, use 0 as starting ID number
