@@ -4,5 +4,9 @@ require 'faker'
 # fake data for testing purposes
 
 def db_seed
-  # Your code goes here!
+  # 100.times do
+  #   Product.create( brand: brands.sample,
+  #   name: product_names.sample,
+  #   price: prices.sample )
+  # end
 end

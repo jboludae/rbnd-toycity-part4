@@ -4,4 +4,7 @@ require 'csv'
 
 class Udacidata
   # Your code goes here!
+  def create
+    puts "joseeee"
+  end
 end
