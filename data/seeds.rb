@@ -4,9 +4,12 @@ require 'faker'
 # fake data for testing purposes
 
 def db_seed
-  # 100.times do
-  #   Product.create( brand: brands.sample,
-  #   name: product_names.sample,
-  #   price: prices.sample )
-  # end
+  brands = Array.new(25).map{Faker::Company.name}
+  product_names = Array.new(25).map{Faker::Commerce.product_name}
+  prices = Array.new(25).map{Faker::Commerce.price}
+  25.times do
+    Product.create( brand: brands.sample,
+    name: product_names.sample,
+    price: prices.sample )
+  end
 end

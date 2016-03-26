@@ -30,11 +30,32 @@ class Udacidata
   end
 
   def self.first(n = 1)
-    if n = 1
+    if n == 1
       return self.all[0]
     else
-      return self.all
+      return self.all[0..(n-1)]
     end
+  end
+
+  def self.last(n = 1)
+    if n == 1
+      return self.all.last
+    else
+      len = self.all.length
+      return self.all[(len-n)..(len-1)]
+    end
+  end
+
+  def self.find(id)
+    # @REVIEWER: calling self.all does not sound very efficient
+    # is there a better way to do this?
+    item = self.all.each.select {|item| item.id == id}
+    return item.first
+  end
+
+  def self.destroy(id)
+    updated_products = self.all.select {|item| item.id != id}
+
   end
 
 end
