@@ -4,10 +4,11 @@ require 'csv'
 
 class Udacidata
   # Your code goes here!
+  @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
+
   def self.create(attributes = nil)
     new_object = self.new(attributes)
-    @data_path = File.dirname(__FILE__) + "/../data/data.csv"
-    CSV.open(@data_path, "ab") do |csv|
+    CSV.open(@@data_path, "ab") do |csv|
       csv << [new_object.id, new_object.brand, new_object.name, new_object.price]
     end
     return new_object
@@ -16,7 +17,7 @@ class Udacidata
   def self.all
     all_products_list = Array.new
     @data_path = File.dirname(__FILE__) + "/../data/data.csv"
-    products = CSV.read(@data_path, headers: true)
+    products = CSV.read(@@data_path, headers: true)
     products.each do |row|
     #   # @REVIEWER: is there any way I can avoid this magic numbers (0, 1, 2, 3)?
     #   # @REVIEWER: creating all objects from scratch every time you
