@@ -5,7 +5,9 @@ require 'csv'
 class Udacidata
   # Your code goes here!
   @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
-
+  # We create our finder methods here
+  # @REVIEWER: is this good practice?
+  create_finder_methods("brand", "name")
   def self.create(attributes = nil)
     new_object = self.new(attributes)
     CSV.open(@@data_path, "ab") do |csv|
@@ -16,7 +18,6 @@ class Udacidata
 
   def self.all
     all_products_list = Array.new
-    @data_path = File.dirname(__FILE__) + "/../data/data.csv"
     products = CSV.read(@@data_path, headers: true)
     products.each do |row|
     #   # @REVIEWER: is there any way I can avoid this magic numbers (0, 1, 2, 3)?
@@ -50,13 +51,43 @@ class Udacidata
   def self.find(id)
     # @REVIEWER: calling self.all does not sound very efficient
     # is there a better way to do this?
-    item = self.all.each.select {|item| item.id == id}
-    return item.first
+    items = self.all.each.select {|item| item.id == id}
+    return items.first
   end
 
   def self.destroy(id)
+    # @REVIEWER: this does not seem very efficient
+    # is there any better way to do this?
+    to_delete_item = self.find(id)
     updated_products = self.all.select {|item| item.id != id}
+    CSV.open(@@data_path, "wb") do |csv|
+      csv << ["id", "brand", "product", "price"]
 
+      updated_products.each do |row|
+        csv.puts([row.id, row.brand, row.name, row.price])
+      end
+    end
+    return to_delete_item
+  end
+
+  def self.where(opt = {})
+    if opt[:brand]
+      return self.all.select { |item| item.brand == opt[:brand]}
+    elsif opt[:name]
+      return self.all.select { |item| item.brand == opt[:name]}
+    end
+  end
+
+  def update(opt = {})
+    # @REVIEWER: is self.class the only way to access
+    # the CLASS? I tried to define a   @@this = self
+    # in
+    self.class.destroy(self.id)
+    self.name = opt[:name] if opt[:name]
+    self.brand = opt[:brand] if opt[:brand]
+    self.price = opt[:price] if opt[:price]
+    self.class.create( brand: self.brand, name: self.name, price: self.price)
+    return self
   end
 
 end
