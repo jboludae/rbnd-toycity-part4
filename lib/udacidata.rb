@@ -52,6 +52,9 @@ class Udacidata
     # @REVIEWER: calling self.all does not sound very efficient
     # is there a better way to do this?
     items = self.all.each.select {|item| item.id == id}
+    if items.length == 0
+      raise ProductNotFoundError, "Product #{id} does not exist found."
+    end
     return items.first
   end
 
@@ -59,6 +62,8 @@ class Udacidata
     # @REVIEWER: this does not seem very efficient
     # is there any better way to do this?
     to_delete_item = self.find(id)
+    # @REVIEWER: as self.find is called here, it will raise a P
+    # ProductNotFoundError if id does not exist
     updated_products = self.all.select {|item| item.id != id}
     CSV.open(@@data_path, "wb") do |csv|
       csv << ["id", "brand", "product", "price"]

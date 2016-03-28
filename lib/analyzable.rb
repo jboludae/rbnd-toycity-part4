@@ -37,7 +37,6 @@ module Analyzable
     brand_count = count_by_name(list)
     by_name = brand_count.each {|key, value| string += %Q{- #{key}: #{value}
     }}
-    puts string
     return string
   end
 
