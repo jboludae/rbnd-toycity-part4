@@ -5,3 +5,7 @@
 # OS generated files #
 ######################
 .DS_Store
+
+# Files I want to ignore #
+######################
+my_test.rb
