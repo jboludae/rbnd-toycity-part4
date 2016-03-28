@@ -74,7 +74,7 @@ class Udacidata
     if opt[:brand]
       return self.all.select { |item| item.brand == opt[:brand]}
     elsif opt[:name]
-      return self.all.select { |item| item.brand == opt[:name]}
+      return self.all.select { |item| item.name == opt[:name]}
     end
   end
 
