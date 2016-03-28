@@ -22,4 +22,23 @@ module Analyzable
     return result
   end
 
+  def print_report(list)
+    string = %Q{
+    Average price: #{average_price(list)}
+
+    Inventory by Brand:
+    }
+    brand_count = count_by_brand(list)
+    by_brand = brand_count.each {|key, value| string += %Q{- #{key}: #{value}
+    }}
+    string += %Q{
+    Inventory by Name:
+    }
+    brand_count = count_by_name(list)
+    by_name = brand_count.each {|key, value| string += %Q{- #{key}: #{value}
+    }}
+    puts string
+    return string
+  end
+
 end
